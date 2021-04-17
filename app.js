@@ -1,22 +1,23 @@
 const express = require('express')
-const bodyParser = require('body-parser')
 const app = express()
-app.use(bodyParser.json())  
+app.use(express.json())  // replaces body-parser
 
-require('./models');
 
-// set up author routes
+// connect to models to routes
+require('./models') 
 const authorRouter = require('./routes/authorRouter')
 
-// handler for GET home page
+
+// GET home page
 app.get('/', (req, res) => {
-    res.send('<h1>Library System</h1>')
+  console.log('connected')
+  res.send('<h1>Library System</h1>')
 })
 
-// handler for author-management requests
-// author routes are added onto the end of '/author-management'
+// Handle author-management requests
+// the author routes are added onto the end of '/author-management'
 app.use('/author-management', authorRouter)
 
 app.listen(process.env.PORT || 3000, () => {
-    console.log('The library app is listening on port 3000!')
+  console.log("The library app is running!")
 })
